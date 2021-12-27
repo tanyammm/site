@@ -1,23 +1,57 @@
-import logo from './logo.svg';
+import React, { useState }  from "react";
+import { Form,  message, Input, Image } from 'antd';
+import img from "./1.jpg";
+import 'antd/dist/antd.css';
 import './App.css';
 
 function App() {
+  const [image, setImage] = useState(false);
+  const [form] = Form.useForm();
+  const { Search } = Input;
+
+  const onFinish = (value) => {
+    if (value === "XmasGiftDeva") {
+      form
+        .validateFields()
+        .then((value) => {
+          form.resetFields();
+          setImage(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else message.error("У вас ошибка!");
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Form name="nest-messages" form={form} layout="vertical"         
+      className="form">
+        <Form.Item
+          name="theme"
+          label="Введите кодовое слово"
+          rules={[
+            {
+              required: true,
+              message: "Вы не ввели кодовое слово! Проверьте правильность ввода",
+            },
+          ]}
         >
-          Learn React
-        </a>
-      </header>
+          <Search
+            placeholder="введите здесь ключевое слово"
+            allowClear
+            enterButton="Старт"
+            size="large"
+            onSearch={onFinish}
+          />
+        </Form.Item>     
+        {image === true ? 
+        (<Image
+          width={200}
+          src={img}
+        />):null}
+     </Form>
+
     </div>
   );
 }
