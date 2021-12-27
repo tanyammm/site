@@ -1,7 +1,6 @@
 import React, { useState }  from "react";
 import { Form,  message, Input, Image } from 'antd';
 import img from "./1.jpg";
-import 'antd/dist/antd.css';
 import './App.css';
 
 function App() {
